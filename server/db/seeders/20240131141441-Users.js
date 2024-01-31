@@ -6,23 +6,23 @@ module.exports = {
       'Users',
       [
         {
-          email: 'Joh_Doe@lol.com',
-          username: 'JohnDoe',
-          password: 'JohnDoe111',
+          email: 'John@Doe.lo',
+          username: 'John',
+          password: 'Johndo',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          email: 'oneone@.lolcom',
-          username: 'oneone',
-          password: 'oneone',
+          email: 'chinazes@lala.com',
+          username: 'chinazes',
+          password: 'chinazes',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          email: 'kandibober-kurva@.lolcom',
-          username: 'kandibober',
-          password: 'kandibober',
+          email: 'saaayndtres@lala.com',
+          username: 'saaayndtres',
+          password: 'saaayndtres',
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -31,7 +31,7 @@ module.exports = {
     );
   },
 
-  async down(queryInterface) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', null, {});
   },
 };
