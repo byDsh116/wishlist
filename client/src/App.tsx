@@ -1,9 +1,11 @@
 import './App.css';
+import RegistrationForm from './components/RegistrationForm';
 
-function App() {
+function App(): JSX.Element {
   return (
     <>
       <div> just test 0.1</div>
+      <RegistrationForm />
     </>
   );
 }
