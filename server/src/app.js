@@ -7,7 +7,7 @@ const app = express();
 
 const indexRouter = require('./routers/indexRouter');
 
-const { PORT } = process.env.PORT;
+const { PORT } = process.env || 3004;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(process.cwd(), 'public')));
