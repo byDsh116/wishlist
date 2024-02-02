@@ -1,0 +1,68 @@
+// import React from 'react'
+import { useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
+
+type InputsType = {
+  email: string;
+  username: string;
+  password: string;
+};
+
+export default function RegistrationForm(): JSX.Element {
+  const [inputs, setInputs] = useState<InputsType>({
+    email: '',
+    username: '',
+    password: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  };
+
+  const handleAdd = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
+    e.preventDefault();
+    try {
+      const result = await axios.post<InputsType, AxiosResponse<InputsType>>(
+        'http://localhost:3000/user/create',
+        inputs
+      );
+      if (result) {
+        console.log('succes registration');
+        setInputs({ email: '', username: '', password: '' });
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.log(`registration error:${error}`);
+    }
+  };
+  // const result = await aiost post
+  return (
+    <form onSubmit={handleAdd}>
+      <input
+        type='text'
+        placeholder='email'
+        name='email'
+        value={inputs.email}
+        onChange={handleChange}
+      />
+      <input
+        type='text'
+        placeholder='username'
+        name='username'
+        value={inputs.username}
+        onChange={handleChange}
+      />
+      <input
+        type='password'
+        placeholder='passsword'
+        name='password'
+        value={inputs.password}
+        onChange={handleChange}
+      />
+      <button>submit</button>
+    </form>
+  );
+}
