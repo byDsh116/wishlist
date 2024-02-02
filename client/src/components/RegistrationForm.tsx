@@ -1,25 +1,44 @@
 // import React from 'react'
 import { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
+
+type InputsType = {
+  email: string;
+  username: string;
+  password: string;
+};
 
 export default function RegistrationForm(): JSX.Element {
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs] = useState<InputsType>({
     email: '',
     username: '',
-    passsword: '',
+    password: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  const handleAdd = async (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleAdd = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
+    e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/reg', inputs);
-      if(response)
-    } catch (error) {}
+      const result = await axios.post<InputsType, AxiosResponse<InputsType>>(
+        'http://localhost:3000/user/create',
+        inputs
+      );
+      if (result) {
+        console.log('succes registration');
+        setInputs({ email: '', username: '', password: '' });
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.log(`registration error:${error}`);
+    }
   };
-
+  // const result = await aiost post
   return (
     <form onSubmit={handleAdd}>
       <input
@@ -40,7 +59,7 @@ export default function RegistrationForm(): JSX.Element {
         type='password'
         placeholder='passsword'
         name='password'
-        value={inputs.passsword}
+        value={inputs.password}
         onChange={handleChange}
       />
       <button>submit</button>
