@@ -39,7 +39,7 @@ export default function RegistrationForm(): JSX.Element {
         throw new Error();
       }
     } catch (error) {
-      console.log(`registration error:${error}`);
+      alert(`registration error: this user already exist`);
     }
   };
   // const result = await aiost post
