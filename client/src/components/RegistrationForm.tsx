@@ -1,6 +1,7 @@
 // import React from 'react'
 import { useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 type InputsType = {
   email: string;
@@ -14,6 +15,8 @@ export default function RegistrationForm(): JSX.Element {
     username: '',
     password: '',
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -31,6 +34,7 @@ export default function RegistrationForm(): JSX.Element {
       if (result) {
         console.log('succes registration');
         setInputs({ email: '', username: '', password: '' });
+        navigate('/userPage');
       } else {
         throw new Error();
       }
