@@ -34,7 +34,7 @@ export default function RegistrationForm(): JSX.Element {
       if (result) {
         console.log('succes registration');
         setInputs({ email: '', username: '', password: '' });
-        navigate('/home');
+        navigate('/userPage');
       } else {
         throw new Error();
       }
