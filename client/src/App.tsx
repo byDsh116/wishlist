@@ -6,7 +6,6 @@ import HomePage from './pages/HomePage';
 function App(): JSX.Element {
   return (
     <>
-      <div> just test 0.1</div>
       <Routes>
         <Route path='/reg' element={<RegistrationForm />} />
         <Route path='/' element={<HomePage />} />

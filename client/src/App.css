@@ -1,13 +1,24 @@
 #root {
   max-width: 1280%;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
 .navbar-box{
-  background-color: aquamarine;
-  width: 1000px;
+  width: 1450px;
   height: 100%;
 }
 
+.link{
+  /* color: black; */
+}
+
+.css-hyum1k-MuiToolbar-root {
+  background-color: #1e1d1d;;
+}
+
+#logo-button{
+  margin-right: 2%;
+  width: 20%;
+  /* color: blueviolet; */
+}

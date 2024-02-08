@@ -1,6 +1,4 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -8,12 +6,10 @@ export default function HomePage() {
   return (
     <div>
       <div>
-        HomePage <br />
-        <br />
         <button onClick={() => navigate('/reg')}>registration</button>
         <br />
         <br />
-        <button>login</button>
+        <button onClick={() => navigate('/login')}>login</button>
       </div>
     </div>
   );
