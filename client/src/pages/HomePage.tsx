@@ -4,7 +4,7 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className='homePage_div_wrap'>
       <div>
         <button onClick={() => navigate('/reg')}>registration</button>
         <br />
