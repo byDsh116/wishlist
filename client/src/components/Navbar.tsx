@@ -7,9 +7,9 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export default function Navbar() {
+export default function Navbar(): JSX.Element {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} className={'navbar-box'}>
       <AppBar position='static'>
         <Toolbar>
           <IconButton
