@@ -9,7 +9,7 @@ type InputsType = {
   password: string;
 };
 
-export default function RegistrationForm(): JSX.Element {
+export default function Form(): JSX.Element {
   const [inputs, setInputs] = useState<InputsType>({
     email: '',
     username: '',
@@ -66,7 +66,7 @@ export default function RegistrationForm(): JSX.Element {
         value={inputs.password}
         onChange={handleChange}
       />
-      <button>submit</button>
+      <button type='submit'>submit</button>
     </form>
   );
 }
