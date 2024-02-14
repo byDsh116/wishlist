@@ -7,6 +7,9 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 // import MenuIcon from '@mui/icons-material/Menu';
 import { grey } from '@mui/material/colors';
+import * as React from 'react';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 const color = grey[900];
 
@@ -32,12 +35,16 @@ export default function Navbar(): JSX.Element {
             className={'typography'}
           >
             <button id='logo-button'>
-              <a className={'link'} href='/'>
+              <a className='link' href='/'>
                 WISHLIST
               </a>
             </button>
           </Typography>
-          {/* <Button color='inherit'>Login</Button> */}
+          <Stack spacing={2} direction='row'>
+            <Button variant='outlined' className='signUp_button'>
+              Sign up
+            </Button>
+          </Stack>
         </Toolbar>
       </AppBar>
     </Box>
