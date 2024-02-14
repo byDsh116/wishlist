@@ -9,7 +9,7 @@ type InputsType = {
   password: string;
 };
 
-export default function Form(): JSX.Element {
+export default function RegistrationForm(): JSX.Element {
   const [inputs, setInputs] = useState<InputsType>({
     email: '',
     username: '',
