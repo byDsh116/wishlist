@@ -7,7 +7,7 @@ function App(): JSX.Element {
   return (
     <>
       <Routes>
-        <Route path='/reg' element={<RegistrationForm />} />
+        <Route path='/registration' element={<RegistrationForm />} />
         <Route path='/' element={<HomePage />} />
       </Routes>
     </>

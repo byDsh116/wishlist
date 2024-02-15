@@ -7,13 +7,18 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 // import MenuIcon from '@mui/icons-material/Menu';
 import { grey } from '@mui/material/colors';
-import * as React from 'react';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const color = grey[900];
 
 export default function Navbar(): JSX.Element {
+  const [isLoginPage, setIsLoginPage] = useState<boolean>(true);
+
+  // const setIsLoginPageHandler = () => {
+  //   isLoginPage ? setIsLoginPage(false) : setIsLoginPage(true);
+  // };
+
   return (
     <Box sx={{ flexGrow: 1 }} className={'navbar-box'}>
       <AppBar position='static'>
@@ -35,18 +40,33 @@ export default function Navbar(): JSX.Element {
             className={'typography'}
           >
             <button id='logo-button'>
-              <a className='link' href='/'>
+              <Link to='/' className='link'>
                 WISHLIST
-              </a>
+              </Link>
             </button>
           </Typography>
-          <Stack spacing={2} direction='row'>
-            <Button variant='outlined' className='signUp_button'>
-              Sign up
-            </Button>
-          </Stack>
+
+          <button
+            id='signUp-button'
+            onClick={() => setIsLoginPage(!isLoginPage)}
+          >
+            {isLoginPage ? (
+              <Link to='/' className='link'>
+                LOGIN
+              </Link>
+            ) : (
+              <Link to='/registration' className='link'>
+                SIGN IN
+              </Link>
+            )}
+          </button>
         </Toolbar>
       </AppBar>
     </Box>
   );
+}
+
+{
+  /* TODO: ЗАМЕНИТЬ ВСЕ ХРЕФЫ на кнопки с навигейт (обработчик внутри
+которого переадресация) */
 }
