@@ -5,13 +5,7 @@ export default function HomePage() {
 
   return (
     <div className='homePage-div_wrap'>
-      {/* <RegistrationForm /> */}
       <LoginForm />
-      <div className='homePage-div_button-container'>
-        <h1>hp</h1>
-        {/* <button onClick={() => navigate('/reg')}>registration</button>
-        <button onClick={() => navigate('/account:id')}>login</button> */}
-      </div>
     </div>
   );
 }

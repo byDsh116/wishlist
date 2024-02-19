@@ -50,13 +50,13 @@ export default function Navbar(): JSX.Element {
             id='signUp-button'
             onClick={() => setIsLoginPage(!isLoginPage)}
           >
-            {isLoginPage ? (
+            {!isLoginPage ? (
               <Link to='/' className='link'>
                 LOGIN
               </Link>
             ) : (
               <Link to='/registration' className='link'>
-                SIGN IN
+                Registration
               </Link>
             )}
           </button>

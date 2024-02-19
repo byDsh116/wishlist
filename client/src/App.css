@@ -18,19 +18,38 @@
 }
 
 #logo-button{
-  margin-right: 2%;
+  margin-right: -3%;
   width: 20%;
   /* color: blueviolet; */
 }
 
 .homePage-div_wrap{
-  border: solid 2px fuchsia;
+ 
   margin-top: 15%;
 }
 
 #signUp-button {
   color: #646cff;
 }
-/* .homePage-div_button-container{
-  
-} */
+
+.form{
+  display: inline-grid;
+  padding: 2%;
+  background-color: #1e1d1d;
+  border-radius: 21px;
+  width: 25%;
+  justify-content: center;
+  /* margin: 5%; */
+}
+
+.form input {
+  border: 1px solid #6066ec;
+  margin: 3%;
+  padding: 1%;
+  width: 100%;
+}
+
+.form button {
+  width: 69%;
+  margin-top: 17px;
+}
