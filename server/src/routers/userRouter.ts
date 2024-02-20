@@ -1,6 +1,16 @@
 const userRouter = require('express').Router();
 import User from '../db/models/user';
 import { Request, Response } from 'express';
+const bcrypt = require('bcrypt');
+
+interface IUser {
+  id: number;
+  email: string;
+  username: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 userRouter.get('/find/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -21,9 +31,16 @@ userRouter.get('/find/:id', async (req: Request, res: Response) => {
 });
 
 userRouter.post('/create', async (req: Request, res: Response) => {
+  const { email, username, password } = req.body;
   try {
-    const newUser = await User.create(req.body);
+    const hash = await bcrypt.hash(password, 10);
+    const newUser = await User.create({
+      email,
+      username,
+      password: hash,
+    } as IUser);
     const newUserData = newUser.get();
+    // req.session.newUser = newUser;
     res.json(newUserData);
   } catch (error) {
     res.status(401).json(error);

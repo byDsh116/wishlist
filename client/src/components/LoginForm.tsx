@@ -60,6 +60,9 @@ export default function LoginForm() {
         onChange={handleChange}
       />
       <button type='submit'>submit</button>
+      <div>
+        <p>Forgot your password?</p>
+      </div>
     </form>
   );
 }
