@@ -53,7 +53,7 @@ userRouter.post('/create', async (req: Request, res: Response) => {
 
 userRouter.post('/login', async (req: Request, res: Response) => {
   try {
-    const { email } = req.body;
+    const { email, password } = req.body;
     console.log(`is this email? `);
     const user = await User.findOne({
       where: {
@@ -65,6 +65,14 @@ userRouter.post('/login', async (req: Request, res: Response) => {
         .status(401)
         .json({ message: 'Email or password is incorrect' });
     }
+
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      return res
+        .status(401)
+        .json({ message: 'Email or password is incorrect' });
+    }
+
     return res.json(user);
   } catch (error) {
     return res.status(401).json(error);

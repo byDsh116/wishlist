@@ -23,6 +23,7 @@ export default function LoginForm() {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
+    // const { email, password } = inputs;
     try {
       const result = await axios.post<InputsType, AxiosResponse>(
         'http://localhost:3000/user/login',
@@ -30,19 +31,20 @@ export default function LoginForm() {
       );
       if (result) {
         console.log('succes login');
+        console.log(`res - ${result}`);
+
         setInputs({ email: '', password: '' });
         navigate('/userPage');
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error(error.response);
+        // console.error(error.response);
         alert(`Error: ${error.response?.statusText}`);
       } else {
         console.error(error);
       }
     }
   };
-  // const result = await aiost post
   return (
     <form onSubmit={handleFind} className='form'>
       <input
@@ -54,7 +56,7 @@ export default function LoginForm() {
       />
       <input
         type='password'
-        placeholder='passsword'
+        placeholder='password'
         name='password'
         value={inputs.password}
         onChange={handleChange}
