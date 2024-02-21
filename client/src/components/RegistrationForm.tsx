@@ -28,7 +28,10 @@ export default function RegistrationForm(): JSX.Element {
     try {
       const result = await axios.post<InputsType, AxiosResponse<InputsType>>(
         'http://localhost:3000/user/create',
-        inputs
+        inputs,
+        {
+          withCredentials: true,
+        }
       );
       if (result) {
         console.log('succes registration');
@@ -38,7 +41,13 @@ export default function RegistrationForm(): JSX.Element {
         throw new Error();
       }
     } catch (error) {
-      alert(`registration error: this user already exist`);
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        console.error(error.message);
+        alert(`Error: ${error.message}`);
+      } else {
+        console.error(error);
+      }
     }
   };
   // const result = await aiost post

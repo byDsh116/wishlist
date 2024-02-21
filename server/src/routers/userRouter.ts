@@ -1,6 +1,6 @@
 const userRouter = require('express').Router();
-import User from '../db/models/user';
 import { Request, Response } from 'express';
+import User from '../db/models/user';
 const bcrypt = require('bcrypt');
 
 interface IUser {
@@ -39,10 +39,14 @@ userRouter.post('/create', async (req: Request, res: Response) => {
       username,
       password: hash,
     } as IUser);
+    console.log(req.session);
+    req.session.username = newUser.username;
+    console.log(req.session);
     const newUserData = newUser.get();
-    // req.session.newUser = newUser;
-    res.json(newUserData);
+    res.status(200).send(newUserData);
   } catch (error) {
+    const { message } = error as Error;
+    console.log(message);
     res.status(401).json(error);
   }
 });
