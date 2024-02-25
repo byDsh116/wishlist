@@ -12,7 +12,6 @@ export default function LoginForm() {
     email: '',
     password: '',
   });
-
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -27,14 +26,14 @@ export default function LoginForm() {
     try {
       const result = await axios.post<InputsType, AxiosResponse>(
         'http://localhost:3000/user/login',
-        inputs
+        inputs,
+        {
+          withCredentials: true,
+        }
       );
       if (result) {
-        console.log('succes login');
-        console.log(`res - ${result}`);
-
         setInputs({ email: '', password: '' });
-        navigate('/userPage');
+        navigate('/user/:username');
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

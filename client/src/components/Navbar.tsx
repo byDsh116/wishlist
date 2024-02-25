@@ -4,17 +4,23 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { grey } from '@mui/material/colors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+// import UserPage from '../pages/UserPage';
+// import EntryButton from './EntryButton';
+// import { Check } from '@mui/icons-material';
 
 const color = grey[900];
 
 export default function Navbar(): JSX.Element {
   const [isLoginPage, setIsLoginPage] = useState<boolean>(true);
+  const [cookie, setCookie] = useState<string | null>(null);
 
-  // const setIsLoginPageHandler = () => {
-  //   isLoginPage ? setIsLoginPage(false) : setIsLoginPage(true);
-  // };
+  useEffect(() => {
+    const dshCookie = Cookies.get('Dsh') ?? null;
+    setCookie(dshCookie);
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }} className={'navbar-box'}>
@@ -43,6 +49,8 @@ export default function Navbar(): JSX.Element {
             </button>
           </Typography>
 
+          {/* <button onClick={() => check()}>ckeck</button> */}
+
           <button
             id='signUp-button'
             onClick={() => setIsLoginPage(!isLoginPage)}
@@ -57,6 +65,7 @@ export default function Navbar(): JSX.Element {
               </Link>
             )}
           </button>
+          {cookie ? <button>exit</button> : <button>not</button>}
         </Toolbar>
       </AppBar>
     </Box>

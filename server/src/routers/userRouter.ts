@@ -39,7 +39,6 @@ userRouter.post('/create', async (req: Request, res: Response) => {
       username,
       password: hash,
     } as IUser);
-    console.log(req.session);
     req.session.username = newUser.username;
     console.log(req.session);
     const newUserData = newUser.get();
@@ -54,7 +53,6 @@ userRouter.post('/create', async (req: Request, res: Response) => {
 userRouter.post('/login', async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    console.log(`is this email? `);
     const user = await User.findOne({
       where: {
         email,
@@ -72,8 +70,8 @@ userRouter.post('/login', async (req: Request, res: Response) => {
         .status(401)
         .json({ message: 'Email or password is incorrect' });
     }
-
-    return res.json(user);
+    req.session.username = user.username;
+    return res.status(200).send(user);
   } catch (error) {
     return res.status(401).json(error);
   }
