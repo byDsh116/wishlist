@@ -39,10 +39,12 @@ userRouter.post('/create', async (req: Request, res: Response) => {
       username,
       password: hash,
     } as IUser);
-    req.session.username = newUser.username;
+    const userData: any = structuredClone(newUser.get({ plain: true }));
+    delete userData.password;
+    req.session.username = userData.username;
     console.log(req.session);
-    const newUserData = newUser.get();
-    res.status(200).send(newUserData);
+    // const newUserData = newUser.get();
+    res.status(200).send(userData);
   } catch (error) {
     const { message } = error as Error;
     console.log(message);
@@ -58,6 +60,8 @@ userRouter.post('/login', async (req: Request, res: Response) => {
         email,
       },
     });
+    const userData: any = structuredClone(user?.get({ plain: true }));
+
     if (!user) {
       return res
         .status(401)
@@ -70,11 +74,25 @@ userRouter.post('/login', async (req: Request, res: Response) => {
         .status(401)
         .json({ message: 'Email or password is incorrect' });
     }
+
+    delete userData.password;
     req.session.username = user.username;
     return res.status(200).send(user);
   } catch (error) {
     return res.status(401).json(error);
   }
+});
+
+userRouter.get('/logout', async (req: Request, res: Response) => {
+  try {
+    req.session.destroy((error: any) => {
+      if (error) {
+        return res.status(401).json('error');
+      } else {
+        return res.clearCookie('Dsh');
+      }
+    });
+  } catch {}
 });
 
 export default userRouter;

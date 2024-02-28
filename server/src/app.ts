@@ -25,8 +25,9 @@ const storeConfig = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 10 * 1000,
-    httpOnly: true,
+    maxAge: 60 * 10 * 1000,
+    httpOnly: false,
+    path: '/',
   },
 };
 

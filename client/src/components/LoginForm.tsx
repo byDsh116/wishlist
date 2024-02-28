@@ -33,7 +33,7 @@ export default function LoginForm() {
       );
       if (result) {
         setInputs({ email: '', password: '' });
-        navigate('/user/:username');
+        navigate(`/user/${result.data.username}`);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
