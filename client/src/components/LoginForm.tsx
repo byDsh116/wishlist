@@ -37,8 +37,11 @@ export default function LoginForm() {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // console.error(error.response);
-        alert(`Error: ${error.response?.statusText}`);
+        if (error.response?.status === 404) {
+          alert('Пользователь не найден');
+        } else if (error.response?.status === 401) {
+          alert('Неверный пароль');
+        }
       } else {
         console.error(error);
       }
