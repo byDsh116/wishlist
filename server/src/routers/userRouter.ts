@@ -63,16 +63,12 @@ userRouter.post('/login', async (req: Request, res: Response) => {
     const userData: any = structuredClone(user?.get({ plain: true }));
 
     if (!user) {
-      return res
-        .status(401)
-        .json({ message: 'Email or password is incorrect' });
+      return res.status(404).json({ message: 'Пользователь не найден' });
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
-      return res
-        .status(401)
-        .json({ message: 'Email or password is incorrect' });
+      return res.status(401).json({ message: 'Неверный пароль' });
     }
 
     delete userData.password;
