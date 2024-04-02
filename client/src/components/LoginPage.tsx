@@ -39,6 +39,7 @@ export default function LoginPage() {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 404) {
           alert('Пользователь не найден');
+          navigate(`/registration`);
         } else if (error.response?.status === 401) {
           alert('Неверный пароль');
         }
