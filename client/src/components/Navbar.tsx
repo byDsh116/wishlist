@@ -7,8 +7,8 @@ import { grey } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
-// import LoginButton from './LoginButton';
-// import RegistrationButton from './RegistrationButton';
+import LogoLink from './LogoLink';
+import AuthorizationButton from './AuthorizationButton';
 
 const color = grey[900];
 
@@ -38,8 +38,6 @@ export default function Navbar(props: INavbarProps): JSX.Element {
     // отслеживаю изсенение состояний
   }, [cookie, isLoggedIn, isLoginPage]);
 
-  // Куки появляются сразу, а вот клг нет, но если его перенести?
-
   return (
     <Box sx={{ flexGrow: 1 }} className={'navbar-box'}>
       <AppBar position='static'>
@@ -58,15 +56,12 @@ export default function Navbar(props: INavbarProps): JSX.Element {
             background-color={{ color }}
             className={'typography'}
           >
-            <button id='logo-button' onClick={() => setIsLoginPage(true)}>
-              <Link to='/' className='link'>
-                WISHLIST
-              </Link>
-            </button>
+            <LogoLink />
           </Typography>
           {/* если залогинен то отображается кнопка логаут */}
           {/* что если изменить логику и менять визибл кнопки через из логед? показывай: не показывай */}
           {/* TODO: кнопка с логикой в отдельный компонент */}
+          <AuthorizationButton cookie={cookie || ''} />
           {isLoggedIn && (
             <button
               onClick={() => {
@@ -85,8 +80,7 @@ export default function Navbar(props: INavbarProps): JSX.Element {
               <Link to='/' className='link'></Link>
             ) : (
               <Link to='/registration' className='link'>
-                Reg
-                {/* <RegistrationButton /> */}
+                -{/* <RegistrationButton /> */}
               </Link>
             )}
           </button>

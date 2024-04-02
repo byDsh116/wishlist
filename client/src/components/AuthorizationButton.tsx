@@ -1,22 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+// import { createBrowserHistory } from 'history';
+import { useNavigate } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
-// interface IAuthorizeButtonProps {
-//   buttonText: string;
-//   onClickHandler: () => void;
-// }
+// const history = createBrowserHistory();
 
-export default function AuthorizationButton() {
-  // const [currentUrl, setCurrentUrl] = useState<string>('/')
+interface IAuthorizationButtonProps {
+  cookie: string;
+}
+export default function AuthorizationButton(props: IAuthorizationButtonProps) {
   const [buttonText, setButtonText] = useState<string>('');
-
+  // const [currentUrl, setCurrentUrl] = useState<string>(
+  //   window.location.pathname
+  // );
+  const { cookie } = props;
   const currentUrl: string = window.location.pathname;
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (currentUrl === '/') {
-      setButtonText('set');
+      setButtonText('Registration');
     } else if (currentUrl === '/registration') {
-      setButtonText('registration');
+      setButtonText('Login');
+    } else if (cookie) {
+      setButtonText('Logout');
     }
-  }, [currentUrl, setButtonText]);
+  }, [currentUrl, setButtonText, cookie]);
 
-  return <button>{buttonText}</button>;
+  const handleClick = () => {
+    if (buttonText === 'Registration') {
+      navigate('/registration');
+    } else if (buttonText === 'Login') {
+      navigate('/');
+    } else if (buttonText === 'Logout') {
+      navigate('/logout');
+    }
+  };
+
+  return <button onClick={handleClick}>{buttonText}</button>;
 }
