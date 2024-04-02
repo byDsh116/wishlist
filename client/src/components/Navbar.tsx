@@ -5,11 +5,10 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { grey } from '@mui/material/colors';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import LogoLink from './LogoLink';
 import AuthorizationButton from './AuthorizationButton';
-
+// import { useNavigate } from 'react-router-dom';
 const color = grey[900];
 
 interface INavbarProps {
@@ -18,10 +17,10 @@ interface INavbarProps {
 
 export default function Navbar(props: INavbarProps): JSX.Element {
   // состояние страницы - находимся ли мы на страницы входа
-  const [isLoginPage, setIsLoginPage] = useState<boolean>(true);
+  // const [isLoginPage, setIsLoginPage] = useState<boolean>(true);
   // проверка залогинен ли пользователь
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
+  // const navigate = useNavigate();
   const { cookie } = props;
 
   //  функция, которая вызывается каждый раз, когда что-то меняется
@@ -36,7 +35,7 @@ export default function Navbar(props: INavbarProps): JSX.Element {
       setIsLoggedIn(false);
     }
     // отслеживаю изсенение состояний
-  }, [cookie, isLoggedIn, isLoginPage]);
+  }, [cookie, isLoggedIn]);
 
   return (
     <Box sx={{ flexGrow: 1 }} className={'navbar-box'}>
@@ -62,17 +61,18 @@ export default function Navbar(props: INavbarProps): JSX.Element {
           {/* что если изменить логику и менять визибл кнопки через из логед? показывай: не показывай */}
           {/* TODO: кнопка с логикой в отдельный компонент */}
           <AuthorizationButton cookie={cookie || ''} />
-          {isLoggedIn && (
+          {/* {isLoggedIn && (
             <button
               onClick={() => {
                 Cookies.remove('Dsh', { path: '/' });
                 setIsLoggedIn(false);
+                navigate('/');
               }}
             >
               Log out
             </button>
-          )}
-          <button
+          )} */}
+          {/* <button
             id='signUp-button'
             onClick={() => setIsLoginPage(!isLoginPage)}
           >
@@ -80,10 +80,10 @@ export default function Navbar(props: INavbarProps): JSX.Element {
               <Link to='/' className='link'></Link>
             ) : (
               <Link to='/registration' className='link'>
-                -{/* <RegistrationButton /> */}
+                -
               </Link>
             )}
-          </button>
+          </button> */}
         </Toolbar>
       </AppBar>
     </Box>

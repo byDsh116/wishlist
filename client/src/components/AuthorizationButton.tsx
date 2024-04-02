@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 // import { createBrowserHistory } from 'history';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 // import { Link } from 'react-router-dom';
 
 // const history = createBrowserHistory();
@@ -33,7 +35,8 @@ export default function AuthorizationButton(props: IAuthorizationButtonProps) {
     } else if (buttonText === 'Login') {
       navigate('/');
     } else if (buttonText === 'Logout') {
-      navigate('/logout');
+      Cookies.remove('Dsh', { path: '/' });
+      navigate('/');
     }
   };
 

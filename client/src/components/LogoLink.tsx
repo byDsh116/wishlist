@@ -11,9 +11,7 @@ export default function LogoLink() {
 
   return (
     <button onClick={handleClick} id='logo-button'>
-      {/* <Link to='/' className='link'> */}
       WISHLIST
-      {/* </Link> */}
     </button>
   );
 }
