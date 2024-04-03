@@ -1,20 +1,12 @@
 import { useEffect, useState } from 'react';
-// import { createBrowserHistory } from 'history';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-
-// import { Link } from 'react-router-dom';
-
-// const history = createBrowserHistory();
 
 interface IAuthorizationButtonProps {
   cookie: string;
 }
 export default function AuthorizationButton(props: IAuthorizationButtonProps) {
   const [buttonText, setButtonText] = useState<string>('');
-  // const [currentUrl, setCurrentUrl] = useState<string>(
-  //   window.location.pathname
-  // );
   const { cookie } = props;
   const currentUrl: string = window.location.pathname;
   const navigate = useNavigate();
@@ -27,7 +19,7 @@ export default function AuthorizationButton(props: IAuthorizationButtonProps) {
     } else if (cookie) {
       setButtonText('Logout');
     }
-  }, [currentUrl, setButtonText, cookie]);
+  }, [currentUrl, cookie]);
 
   const handleClick = () => {
     if (buttonText === 'Registration') {
@@ -36,6 +28,7 @@ export default function AuthorizationButton(props: IAuthorizationButtonProps) {
       navigate('/');
     } else if (buttonText === 'Logout') {
       Cookies.remove('Dsh', { path: '/' });
+      setButtonText('Login');
       navigate('/');
     }
   };
