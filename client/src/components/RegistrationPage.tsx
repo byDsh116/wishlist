@@ -8,7 +8,7 @@ type InputsType = {
   password: string;
 };
 
-export default function RegistrationForm(): JSX.Element {
+export default function RegistrationPage(): JSX.Element {
   const [inputs, setInputs] = useState<InputsType>({
     email: '',
     username: '',
@@ -52,7 +52,7 @@ export default function RegistrationForm(): JSX.Element {
   };
   // const result = await aiost post
   return (
-    <form onSubmit={handleAdd}>
+    <form onSubmit={handleAdd} className='form' id='registration'>
       <input
         type='text'
         placeholder='email'

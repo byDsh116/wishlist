@@ -42,6 +42,10 @@
   /* margin: 5%; */
 }
 
+#registration{
+  margin: 5%;
+}
+
 .form input {
   border: 1px solid #6066ec;
   margin: 3%;

@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
 import React, { useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 type InputsType = {
@@ -7,7 +7,7 @@ type InputsType = {
   password: string;
 };
 
-export default function LoginForm() {
+export default function LoginPage() {
   const [inputs, setInputs] = useState<InputsType>({
     email: '',
     password: '',
@@ -39,6 +39,7 @@ export default function LoginForm() {
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 404) {
           alert('Пользователь не найден');
+          navigate(`/registration`);
         } else if (error.response?.status === 401) {
           alert('Неверный пароль');
         }

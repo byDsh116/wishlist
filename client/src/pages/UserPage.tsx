@@ -1,7 +1,7 @@
-import React from 'react';
 import Cookies from 'js-cookie';
+import HomePage from './HomePage';
 
 export default function UserPage() {
   const cookie = Cookies.get('Dsh');
-  return cookie ? <div>UserPage</div> : <h3>you need to login</h3>;
+  return cookie ? <div>UserPage</div> : <HomePage />;
 }
