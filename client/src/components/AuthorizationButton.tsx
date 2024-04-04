@@ -11,6 +11,7 @@ export default function AuthorizationButton(props: IAuthorizationButtonProps) {
   const currentUrl: string = window.location.pathname;
   const navigate = useNavigate();
 
+  // Этот useEffect будет вызываться каждый раз при изменении currentUrl или cookie
   useEffect(() => {
     if (currentUrl === '/') {
       setButtonText('Registration');
@@ -20,6 +21,14 @@ export default function AuthorizationButton(props: IAuthorizationButtonProps) {
       setButtonText('Logout');
     }
   }, [currentUrl, cookie]);
+
+  // Этот useEffect будет вызываться только один раз при первом рендере компонента
+  useEffect(() => {
+    // Проверяем наличие кук при каждом входе на страницу
+    if (cookie) {
+      setButtonText('Logout');
+    }
+  }, []); // В зависимости от того, как у вас генерируется cookie, этот эффект может быть вызван несколько раз, так что пустой массив зависимостей - это нормально
 
   const handleClick = () => {
     if (buttonText === 'Registration') {
