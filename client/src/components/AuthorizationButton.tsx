@@ -1,46 +1,45 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useReducer } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { AuthActionTypes } from '../types/types';
+import { authReducer } from '../redux/authReducer';
 
 interface IAuthorizationButtonProps {
   cookie: string;
 }
+
 export default function AuthorizationButton(props: IAuthorizationButtonProps) {
-  const [buttonText, setButtonText] = useState<string>('');
   const { cookie } = props;
-  const currentUrl: string = window.location.pathname;
   const navigate = useNavigate();
+  const location = useLocation();
+  const [state, dispatch] = useReducer(authReducer, { isLoggedIn: !!cookie });
 
-  // Этот useEffect будет вызываться каждый раз при изменении currentUrl или cookie
   useEffect(() => {
-    if (currentUrl === '/') {
-      setButtonText('Registration');
-    } else if (currentUrl === '/registration') {
-      setButtonText('Login');
-    } else if (cookie) {
-      setButtonText('Logout');
-    }
-  }, [currentUrl, cookie]);
-
-  // Этот useEffect будет вызываться только один раз при первом рендере компонента
-  useEffect(() => {
-    // Проверяем наличие кук при каждом входе на страницу
     if (cookie) {
-      setButtonText('Logout');
+      dispatch({ type: AuthActionTypes.LOGIN });
     }
-  }, []); // В зависимости от того, как у вас генерируется cookie, этот эффект может быть вызван несколько раз, так что пустой массив зависимостей - это нормально
+  }, [cookie]);
 
   const handleClick = () => {
-    if (buttonText === 'Registration') {
-      navigate('/registration');
-    } else if (buttonText === 'Login') {
-      navigate('/');
-    } else if (buttonText === 'Logout') {
+    if (state.isLoggedIn) {
       Cookies.remove('Dsh', { path: '/' });
-      setButtonText('Login');
-      navigate('/');
+      dispatch({ type: AuthActionTypes.LOGOUT });
+    } else {
+      if (location.pathname === '/') {
+        navigate('/registration');
+      } else {
+        navigate('/');
+      }
     }
   };
 
-  return <button onClick={handleClick}>{buttonText}</button>;
+  return (
+    <button onClick={handleClick}>
+      {location.pathname === '/'
+        ? 'Registration'
+        : state.isLoggedIn
+        ? 'Logout'
+        : 'Login'}
+    </button>
+  );
 }
