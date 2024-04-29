@@ -50,7 +50,6 @@ export default function RegistrationPage(): JSX.Element {
       }
     }
   };
-  // const result = await aiost post
   return (
     <form onSubmit={handleAdd} className='form' id='registration'>
       <input

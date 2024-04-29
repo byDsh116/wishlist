@@ -1,36 +1,13 @@
-import { useEffect, useReducer } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import { useReducer } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AuthActionTypes } from '../types/types';
 import { authReducer } from '../redux/authReducer';
 
-interface IAuthorizationButtonProps {
-  cookie: string;
-}
-
-export default function AuthorizationButton(props: IAuthorizationButtonProps) {
-  const { cookie } = props;
-  const navigate = useNavigate();
+export default function AuthorizationButton() {
   const location = useLocation();
-  const [state, dispatch] = useReducer(authReducer, { isLoggedIn: !!cookie });
-
-  useEffect(() => {
-    if (cookie) {
-      dispatch({ type: AuthActionTypes.LOGIN });
-    }
-  }, [cookie]);
-
+  const [state, dispatch] = useReducer(authReducer, { isLoggedIn: false });
   const handleClick = () => {
-    if (state.isLoggedIn) {
-      Cookies.remove('Dsh', { path: '/' });
-      dispatch({ type: AuthActionTypes.LOGOUT });
-    } else {
-      if (location.pathname === '/') {
-        navigate('/registration');
-      } else {
-        navigate('/');
-      }
-    }
+    dispatch({ type: AuthActionTypes.LOGOUT });
   };
 
   return (
