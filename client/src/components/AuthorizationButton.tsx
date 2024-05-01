@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthActionTypes } from '../types/types';
 import { authReducer } from '../redux/authReducer';
@@ -24,12 +24,21 @@ export default function AuthorizationButton() {
     }
   };
 
+  useEffect(() => {}, []);
+  const logoutHandleClick = () => {
+    if (!state.isLoggedIn) {
+      Cookies.remove('Dsh', { path: '/' });
+      dispatch({ type: AuthActionTypes.LOGOUT });
+      navigate('/');
+    }
+  };
+
   return (
     <>
       <button onClick={handleClick} className={cookie ? 'hidden' : ''}>
         {location.pathname === '/' ? 'Registration' : 'Login'}
       </button>
-      <button className={cookie ? '' : 'hidden'}>
+      <button onClick={logoutHandleClick} className={cookie ? '' : 'hidden'}>
         <LogoutIcon />{' '}
       </button>
     </>
