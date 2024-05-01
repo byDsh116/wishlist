@@ -1,45 +1,37 @@
-import { useEffect, useReducer } from 'react';
+import { useReducer } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import { AuthActionTypes } from '../types/types';
 import { authReducer } from '../redux/authReducer';
+import Cookies from 'js-cookie';
+import LogoutIcon from '@mui/icons-material/Logout';
 
-interface IAuthorizationButtonProps {
-  cookie: string;
-}
-
-export default function AuthorizationButton(props: IAuthorizationButtonProps) {
-  const { cookie } = props;
-  const navigate = useNavigate();
+export default function AuthorizationButton() {
+  const cookie = Cookies.get('Dsh');
   const location = useLocation();
-  const [state, dispatch] = useReducer(authReducer, { isLoggedIn: !!cookie });
+  const [state, dispatch] = useReducer(authReducer, { isLoggedIn: false });
 
-  useEffect(() => {
-    if (cookie) {
-      dispatch({ type: AuthActionTypes.LOGIN });
-    }
-  }, [cookie]);
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    if (state.isLoggedIn) {
-      Cookies.remove('Dsh', { path: '/' });
-      dispatch({ type: AuthActionTypes.LOGOUT });
-    } else {
-      if (location.pathname === '/') {
-        navigate('/registration');
-      } else {
-        navigate('/');
+    if (location.pathname === '/') {
+      navigate('registration');
+      if (state.isLoggedIn) {
+        // Cookies.remove('Dsh', { path: '/' });
+        dispatch({ type: AuthActionTypes.LOGIN });
       }
+    } else {
+      navigate('/');
     }
   };
 
   return (
-    <button onClick={handleClick}>
-      {location.pathname === '/'
-        ? 'Registration'
-        : state.isLoggedIn
-        ? 'Logout'
-        : 'Login'}
-    </button>
+    <>
+      <button onClick={handleClick} className={cookie ? 'hidden' : ''}>
+        {location.pathname === '/' ? 'Registration' : 'Login'}
+      </button>
+      <button className={cookie ? '' : 'hidden'}>
+        <LogoutIcon />{' '}
+      </button>
+    </>
   );
 }

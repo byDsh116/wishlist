@@ -22,7 +22,6 @@ export default function LoginPage() {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-    // const { email, password } = inputs;
     try {
       const result = await axios.post<InputsType, AxiosResponse>(
         'http://localhost:3000/user/login',

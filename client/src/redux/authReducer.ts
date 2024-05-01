@@ -1,4 +1,5 @@
-import { AuthAction, AuthActionTypes, AuthState } from '../types/types';
+import { AnyAction } from '@reduxjs/toolkit';
+import { AuthActionTypes, AuthState } from '../types/types';
 import Cookies from 'js-cookie';
 
 const initialState: AuthState = {
@@ -7,15 +8,13 @@ const initialState: AuthState = {
 
 export const authReducer = (
   state: AuthState = initialState,
-  action: AuthAction
+  action: AnyAction
 ): AuthState => {
   switch (action.type) {
     case AuthActionTypes.LOGIN:
       return { ...state, isLoggedIn: true };
     case AuthActionTypes.LOGOUT:
       return { ...state, isLoggedIn: false };
-    // case AuthActionTypes.SET_USERNAME:
-    //   return { ...state, username: action.payload };
     default:
       return state;
   }
