@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthActionTypes } from '../types/types';
 import { authReducer } from '../redux/authReducer';
 import Cookies from 'js-cookie';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function AuthorizationButton() {
   const cookie = Cookies.get('Dsh');
@@ -24,8 +25,13 @@ export default function AuthorizationButton() {
   };
 
   return (
-    <button onClick={handleClick} className={cookie ? 'hidden' : ''}>
-      {location.pathname === '/' ? 'Registration' : 'Login'}
-    </button>
+    <>
+      <button onClick={handleClick} className={cookie ? 'hidden' : ''}>
+        {location.pathname === '/' ? 'Registration' : 'Login'}
+      </button>
+      <button className={cookie ? '' : 'hidden'}>
+        <LogoutIcon />{' '}
+      </button>
+    </>
   );
 }
