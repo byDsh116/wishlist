@@ -7,7 +7,7 @@ export default function UserPage() {
   return cookie ? (
     <div>
       UserPage
-      <CreateRoomModal />
+      {/* <CreateRoomModal /> */}
     </div>
   ) : (
     <HomePage />
