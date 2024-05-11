@@ -1,6 +1,6 @@
 const userRouter = require('express').Router();
 import { Request, Response } from 'express';
-import User from '../db/models/user';
+import User from '../../db/models/user';
 const bcrypt = require('bcrypt');
 
 interface IUser {
@@ -20,7 +20,6 @@ userRouter.get('/find/:id', async (req: Request, res: Response) => {
     }
     const user = await User.findByPk(id);
     if (!user) {
-      //TODO:  использовать правильные коды ответа
       return res.status(400).send('User not found');
     }
     return res.json(user.get({ plain: true }));
