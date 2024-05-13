@@ -33,6 +33,7 @@ export default function RegistrationPage(): JSX.Element {
           withCredentials: true,
         }
       );
+
       if (result) {
         console.log('succes registration');
         setInputs({ email: '', username: '', password: '' });
