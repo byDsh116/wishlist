@@ -1,4 +1,5 @@
 import userRouter from './routers/userRouter';
+import roomRouter from './routers/roomRouter';
 import * as path from 'path';
 import express from 'express';
 import cors from 'cors';
@@ -39,6 +40,7 @@ app.use(express.json());
 app.use(cors({ origin: true, credentials: true }));
 
 app.use('/user', userRouter);
+app.use('/room', roomRouter);
 
 app.listen(PORT, () => {
   console.log(`SERVER STARTED ON PORT===> ${PORT}`);
