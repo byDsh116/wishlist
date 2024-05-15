@@ -1,6 +1,6 @@
 const userRouter = require('express').Router();
 import { Request, Response } from 'express';
-// import {User } from '../../db/models/';
+
 const bcrypt = require('bcrypt');
 
 import db from '../../src/db/models';
@@ -8,14 +8,14 @@ import db from '../../src/db/models';
 const DB: any = db;
 const { User } = DB;
 
-// interface IUser {
-//   id: number;
-//   email: string;
-//   username: string;
-//   password: string;
-//   createdAt: Date;
-//   updatedAt: Date;
-// }
+interface IUser {
+  id: number;
+  email: string;
+  username: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 userRouter.get('/find/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -42,7 +42,7 @@ userRouter.post('/create', async (req: Request, res: Response) => {
       email,
       username,
       password: hash,
-    });
+    } as IUser);
     const userData: any = structuredClone(newUser.get({ plain: true }));
     delete userData.password;
     req.session.username = userData.username;

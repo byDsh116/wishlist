@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -32,33 +32,33 @@ export default function CreateRoomModal(): JSX.Element {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = async (
-  //   e: React.FormEvent<HTMLFormElement>
-  // ): Promise<void> => {
-  //   e.preventDefault();
-  //   try {
-  //     const result = await axios.post(
-  //       'http://localhost:3000/room/create',
-  //       inputs
-  //       // TODO: DO AT SERVER
-  //     );
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
+    e.preventDefault();
+    try {
+      const result = await axios.post(
+        'http://localhost:3000/room/create',
+        inputs
+        // TODO: DO AT SERVER
+      );
 
-  //     if (result) {
-  //       console.log('success create room', result.data);
-  //       setInputs({ roomName: '', roomDescription: '' });
-  //     } else {
-  //       throw new Error();
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     if (axios.isAxiosError(error)) {
-  //       console.error(error.message);
-  //       alert(`Error: ${error.message}`);
-  //     } else {
-  //       console.error(error);
-  //     }
-  //   }
-  // };
+      if (result) {
+        console.log('success create room', result.data);
+        setInputs({ roomName: '', roomDescription: '' });
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.log(error);
+      if (axios.isAxiosError(error)) {
+        console.error(error.message);
+        alert(`Error: ${error.message}`);
+      } else {
+        console.error(error);
+      }
+    }
+  };
 
   return (
     <React.Fragment>
@@ -66,38 +66,38 @@ export default function CreateRoomModal(): JSX.Element {
         Create room
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create room</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            required
-            margin='dense'
-            id='roomName'
-            name='roomName'
-            label='Room name'
-            type='text'
-            fullWidth
-            variant='standard'
-            onChange={handleChange}
-          />
+        <form onSubmit={handleSubmit}>
+          <DialogTitle>Create room</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              required
+              margin='dense'
+              id='roomName'
+              name='roomName'
+              label='Room name'
+              type='text'
+              fullWidth
+              variant='standard'
+              onChange={handleChange}
+            />
 
-          <TextField
-            autoFocus
-            margin='dense'
-            id='roomDescription'
-            name='roomDescription'
-            label='Room description'
-            type='text'
-            fullWidth
-            variant='standard'
-            onChange={handleChange}
-          />
-        </DialogContent>
+            <TextField
+              autoFocus
+              margin='dense'
+              id='roomDescription'
+              name='roomDescription'
+              label='Room description'
+              type='text'
+              fullWidth
+              variant='standard'
+              onChange={handleChange}
+            />
+          </DialogContent>
+        </form>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          {/* <Button type='submit' onClick={handleSubmit}> */}
-          Create
-          {/* </Button> */}
+          <Button type='submit'>Create</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
