@@ -15,6 +15,25 @@ interface IRoom {
   updatedAt: Date;
 }
 
+roomRouter.post('/create', async (req: Request, res: Response) => {
+  const { roomName, roomDescription, userId } = req.body;
+  //   TODO: нужно ли передавать овнер айди тут?
+  try {
+    const newRoom = await Room.create({
+      roomName,
+      roomDescription,
+      userId,
+    });
+    const roomData: any = structuredClone(newRoom.get({ plain: true }));
+    req.session.username = roomData.name;
+    // const newUserData = newUser.get();
+    res.status(200).send(roomData);
+  } catch (error) {
+    const { message } = error as Error;
+    console.log(message);
+    res.status(401).json(error);
+  }
+});
 // roomRouter.get('/find/:id', async (req: Request, res: Response) => {
 //   const { id } = req.params;
 //   try {
@@ -31,26 +50,6 @@ interface IRoom {
 //     return res.status(400).send('er');
 //   }
 // });
-
-roomRouter.post('/create', async (req: Request, res: Response) => {
-  const { roomName, roomDescription, userId } = req.body;
-  //   TODO: нужно ли передавать овнер айди тут?
-  try {
-    const newRoom = await Room.create({
-      roomName,
-      roomDescription,
-      userId,
-    } as IRoom);
-    const roomData: any = structuredClone(newRoom.get({ plain: true }));
-    req.session.username = roomData.name;
-    // const newUserData = newUser.get();
-    res.status(200).send(roomData);
-  } catch (error) {
-    const { message } = error as Error;
-    console.log(message);
-    res.status(401).json(error);
-  }
-});
 
 // roomRouter.post('/login', async (req: Request, res: Response) => {
 //   try {

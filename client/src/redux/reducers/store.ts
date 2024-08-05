@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { authReducer } from './authReducer';
+import { authReducer } from '../authReducer'; // Именованный импорт
 
-const rootReducer = combineReducers({ authReducer });
+const rootReducer = combineReducers({ auth: authReducer }); // Используем ключ 'auth'
 const store = configureStore({ reducer: rootReducer });
 
 export type AppDispatch = typeof store.dispatch;

@@ -1,5 +1,5 @@
 const userRouter = require('express').Router();
-import { Request, Response } from 'express';
+import { Request, Response, response } from 'express';
 
 const bcrypt = require('bcrypt');
 
@@ -43,11 +43,12 @@ userRouter.post('/create', async (req: Request, res: Response) => {
       username,
       password: hash,
     } as IUser);
+
     const userData: any = structuredClone(newUser.get({ plain: true }));
     delete userData.password;
+    req.session.userId = newUser.id.toString;
     req.session.username = userData.username;
-    console.log(req.session);
-    // const newUserData = newUser.get();
+    console.log(req.session); // dont forget to delete
     res.status(200).send(userData);
   } catch (error) {
     const { message } = error as Error;
@@ -64,7 +65,6 @@ userRouter.post('/login', async (req: Request, res: Response) => {
         email,
       },
     });
-    const userData: any = structuredClone(user?.get({ plain: true }));
 
     if (!user) {
       return res.status(404).json({ message: 'Пользователь не найден' });
@@ -75,24 +75,26 @@ userRouter.post('/login', async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'Неверный пароль' });
     }
 
+    const userData: any = structuredClone(user?.get({ plain: true }));
     delete userData.password;
+
+    req.session.userId = user.id.toString;
     req.session.username = user.username;
+
     return res.status(200).send(user);
   } catch (error) {
     return res.status(401).json(error);
   }
 });
-
-userRouter.get('/logout', async (req: Request, res: Response) => {
-  try {
-    req.session.destroy((error: any) => {
-      if (error) {
-        return res.status(401).json('error');
-      } else {
-        return res.clearCookie('Dsh');
-      }
-    });
-  } catch {}
+userRouter.get('/logout', (req: Request, res: Response) => {
+  req.session.destroy((error: any) => {
+    if (error) {
+      return res.status(500).send('Failed to logout');
+    } else {
+      res.clearCookie('Dsh', { path: '/' });
+      return res.status(200).send('Logged out');
+    }
+  });
 });
 
 export default userRouter;

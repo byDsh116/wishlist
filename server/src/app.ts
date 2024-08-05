@@ -16,19 +16,20 @@ const { PORT } = process.env || 3004;
 declare module 'express-session' {
   export interface SessionData {
     username: string;
+    userId: string;
   }
 }
 
 const storeConfig = {
-  name: 'Dsh',
   store: new FileStore(),
   secret: process.env.SESSION_SECRET ?? 'Session',
   resave: false,
   saveUninitialized: false,
   cookie: {
+    name: 'Dsh', // Имя куки
     maxAge: 60 * 10 * 1000,
-    httpOnly: false,
-    path: '/',
+    httpOnly: true,
+    path: '/', // Путь
   },
 };
 

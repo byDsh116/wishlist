@@ -1,6 +1,10 @@
+// LoginPage.tsx
+
 import React, { useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/actions/authActions';
 
 type InputsType = {
   email: string;
@@ -13,6 +17,7 @@ export default function LoginPage() {
     password: '',
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
@@ -30,9 +35,10 @@ export default function LoginPage() {
           withCredentials: true,
         }
       );
-      if (result) {
+      if (result.data) {
+        dispatch(login(inputs.email));
         setInputs({ email: '', password: '' });
-        navigate(`/user/${result.data.username}`);
+        navigate(`/userPage/${result.data.username}`); // Используем email для навигации
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -47,6 +53,7 @@ export default function LoginPage() {
       }
     }
   };
+
   return (
     <form onSubmit={handleFind} className='form'>
       <input
@@ -63,7 +70,7 @@ export default function LoginPage() {
         value={inputs.password}
         onChange={handleChange}
       />
-      <button type='submit'>submit</button>
+      <button type='submit'>Submit</button>
       <div>
         <p>Forgot your password?</p>
       </div>

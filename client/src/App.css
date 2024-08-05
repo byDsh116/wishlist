@@ -13,6 +13,10 @@
   /* color: black; */
 }
 
+.hidden {
+  display: none;
+}
+
 .css-hyum1k-MuiToolbar-root {
   background-color: #1e1d1d;;
 }

@@ -6,6 +6,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import Cookies from 'js-cookie';
 
 type RoomInputsType = {
   roomName: string;
@@ -36,16 +37,21 @@ export default function CreateRoomModal(): JSX.Element {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
+    const email = Cookies.get('email');
+    if (!email) {
+      console.log('user not a found');
+      return;
+    }
     try {
-      const result = await axios.post(
-        'http://localhost:3000/room/create',
-        inputs
-        // TODO: DO AT SERVER
-      );
+      const result = await axios.post('http://localhost:3000/room/create', {
+        ...inputs,
+        email,
+      });
 
       if (result) {
         console.log('success create room', result.data);
         setInputs({ roomName: '', roomDescription: '' });
+        handleClose();
       } else {
         throw new Error();
       }
@@ -94,11 +100,11 @@ export default function CreateRoomModal(): JSX.Element {
               onChange={handleChange}
             />
           </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button type='submit'>Create</Button>
+          </DialogActions>
         </form>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type='submit'>Create</Button>
-        </DialogActions>
       </Dialog>
     </React.Fragment>
   );

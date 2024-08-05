@@ -1,9 +1,10 @@
 import { AnyAction } from '@reduxjs/toolkit';
-import { AuthActionTypes, AuthState } from '../types/types';
-import Cookies from 'js-cookie';
+import { AuthActionTypes, AuthState } from './types/types';
+import Cookies from 'js-cookie'; // импортируем js-cookie
 
 const initialState: AuthState = {
-  isLoggedIn: !!Cookies.get('Dsh'),
+  isLoggedIn: !!localStorage.getItem('email'),
+  email: localStorage.getItem('email') || '',
 };
 
 export const authReducer = (
@@ -12,9 +13,12 @@ export const authReducer = (
 ): AuthState => {
   switch (action.type) {
     case AuthActionTypes.LOGIN:
-      return { ...state, isLoggedIn: true };
+      localStorage.setItem('email', action.payload || '');
+      return { ...state, isLoggedIn: true, email: action.payload || '' };
     case AuthActionTypes.LOGOUT:
-      return { ...state, isLoggedIn: false };
+      localStorage.removeItem('email'); // Удаляем email из localStorage
+      Cookies.remove('Dsh'); // Удаляем куки с именем 'Dsh'
+      return { ...state, isLoggedIn: false, email: '' };
     default:
       return state;
   }
