@@ -67,9 +67,9 @@ export default function CreateRoomModal(): JSX.Element {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          {/* <Button type='submit' onClick={handleSubmit}> */}
+          <Button type='submit' onClick={handleSubmit}>
           Create
-          {/* </Button> */}
+          </Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
