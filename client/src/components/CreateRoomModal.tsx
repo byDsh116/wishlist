@@ -32,34 +32,6 @@ export default function CreateRoomModal(): JSX.Element {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = async (
-  //   e: React.FormEvent<HTMLFormElement>
-  // ): Promise<void> => {
-  //   e.preventDefault();
-  //   try {
-  //     const result = await axios.post(
-  //       'http://localhost:3000/room/create',
-  //       inputs
-  //       // TODO: DO AT SERVER
-  //     );
-
-  //     if (result) {
-  //       console.log('success create room', result.data);
-  //       setInputs({ roomName: '', roomDescription: '' });
-  //     } else {
-  //       throw new Error();
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     if (axios.isAxiosError(error)) {
-  //       console.error(error.message);
-  //       alert(`Error: ${error.message}`);
-  //     } else {
-  //       console.error(error);
-  //     }
-  //   }
-  // };
-
   return (
     <React.Fragment>
       <Button variant='outlined' onClick={handleClickOpen}>
